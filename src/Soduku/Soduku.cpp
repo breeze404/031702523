@@ -1,3 +1,4 @@
+ï»¿#include "pch.h"
 #include <iostream>
 #include<fstream>
 #include <stdlib.h>
@@ -5,78 +6,78 @@
 using namespace std;
 
 int arr[11][11] = { 0 };
-int xrr[11][11] = { 0 };//µÚÒ»Î¬ÊÇµÚ¼¸ĞĞ£¬µÚ¶şÎ¬ÊÇµÚ¼¸¸öÊı
-int yrr[11][11] = { 0 };//µÚÒ»Î¬ÊÇµÚ¼¸ÁĞ£¬µÚ¶şÎ¬ÊÇµÚ¼¸¸öÊı
-int mrr[11][11] = { 0 };//µÚÒ»Î¬ÊÇµÚ¼¸¸ö¹¬£¬µÚ¶şÎ¬ÊÇµÚ¼¸¸öÊı
-ifstream fin("in.txt");
-ofstream fout("out.txt");
-int checkm(int x, int y,int a , int b)//ÕÒµ½µ±Ç°¸ñËùÔÚ¹¬µÄ±àºÅ
+int xrr[11][11] = { 0 };//ç¬¬ä¸€ç»´æ˜¯ç¬¬å‡ è¡Œï¼Œç¬¬äºŒç»´æ˜¯ç¬¬å‡ ä¸ªæ•°
+int yrr[11][11] = { 0 };//ç¬¬ä¸€ç»´æ˜¯ç¬¬å‡ åˆ—ï¼Œç¬¬äºŒç»´æ˜¯ç¬¬å‡ ä¸ªæ•°
+int mrr[11][11] = { 0 };//ç¬¬ä¸€ç»´æ˜¯ç¬¬å‡ ä¸ªå®«ï¼Œç¬¬äºŒç»´æ˜¯ç¬¬å‡ ä¸ªæ•°
+ifstream fin("input.txt");
+ofstream fout("output.txt");
+int checkm(int x, int y, int a, int b)//æ‰¾åˆ°å½“å‰æ ¼æ‰€åœ¨å®«çš„ç¼–å·
 {
 	int n, m;
 	n = a / x;
-	if ((a%x )!= 0)
+	if ((a%x) != 0)
 		n++;
 	m = b / y;
-	if ((b%y)!= 0)
+	if ((b%y) != 0)
 		m++;
 	return (n - 1)*x + m;
 }
-void read(int x,int a,int b)//ÎÄ¼şÁ÷ÊäÈë
+void read(int x, int a, int b)//æ–‡ä»¶æµè¾“å…¥
 {
-	int i,j,k;
-	for (i=1;i<=x;i++)
-		for (j = 1; j <=x; j++)
+	int i, j, k;
+	for (i = 1; i <= x; i++)
+		for (j = 1; j <= x; j++)
 		{
 			fin >> arr[i][j];
 			k = arr[i][j];
 			if (k != 0)
 			{
-				xrr[i][k] = 1;//°Ñ³õÊ¼»¯Ê±ĞĞÉÏµ±Ç°Êı×ÖÖÃÎª²»¿ÉÓÃ
-				yrr[j][k] = 1;//Ô­ÀíÍ¬ÉÏ
+				xrr[i][k] = 1;//æŠŠåˆå§‹åŒ–æ—¶è¡Œä¸Šå½“å‰æ•°å­—ç½®ä¸ºä¸å¯ç”¨
+				yrr[j][k] = 1;//åŸç†åŒä¸Š
 				if (a != 1)
-					mrr[checkm(a,b,i,j)][k] = 1;//Ô­ÀíÍ¬ÉÏ
+					mrr[checkm(a, b, i, j)][k] = 1;//åŸç†åŒä¸Š
 			}
 		}
 }
-void print(int x)//Êä³öÊı¶À
+void print(int x)//è¾“å‡ºæ•°ç‹¬
 {
 	int i, j;
-	for (i = 1; i <=x; i++)
+	for (i = 1; i <= x; i++)
 	{
-		for (j = 1; j <=x; j++)
+		for (j = 1; j <= x; j++)
 		{
-			fout << arr[i][j]<<' ';
+			fout << arr[i][j] << ' ';
 		}
 		fout << endl;
 	}
 }
-bool checkandwrite(int x,int y,int type,int a,int b)//ÕÒµ½¿Õ°×µÄ¸ñ×Ó£¬ÕÒµ½²¢ÌîÈëºÏÊÊµÄÊı×Ö
+bool checkandwrite(int x, int y, int type, int a, int b)//æ‰¾åˆ°ç©ºç™½çš„æ ¼å­ï¼Œæ‰¾åˆ°å¹¶å¡«å…¥åˆé€‚çš„æ•°å­—
 {
-	if (x == type && y == (type + 1))//±éÀúÍêÊı¶À×îºóÒ»¸ö¸ñ×Ó
+	if (x == type && y == (type + 1))//éå†å®Œæ•°ç‹¬æœ€åä¸€ä¸ªæ ¼å­
 		return true;
-	else if (y == (type + 1))//±éÀú»»ĞĞ
+	else if (y == (type + 1))//éå†æ¢è¡Œ
 	{
 		x++;
 		y = 1;
 	}
-	if ( arr[x][y] == 0 )//ÕÒµ½ÁË¿Õ°×¸ñ×Ó
+	if (arr[x][y] == 0)//æ‰¾åˆ°äº†ç©ºç™½æ ¼å­
 	{
 		int num = checkm(a, b, x, y);
-		for ( int n = 1; n <= type; n++ )
+		for (int n = 1; n <= type; n++)
 		{
-			if (xrr[x][n] == 0 && yrr[y][n] == 0&&mrr[num][n]==0)
+			if (xrr[x][n] == 0 && yrr[y][n] == 0 && mrr[num][n] == 0)
 			{
-				arr[x][y] = n;//ÌîÈëÊı×Ö£¬Í¬Ê±¸üĞÂ¿ÉÓÃÊı×ÖµÄÈı¸öÊı×é
+				arr[x][y] = n;//å¡«å…¥æ•°å­—ï¼ŒåŒæ—¶æ›´æ–°å¯ç”¨æ•°å­—çš„ä¸‰ä¸ªæ•°ç»„
 				xrr[x][n] = 1;
 				yrr[y][n] = 1;
-				if (a!=1)
+				if (a != 1)
 					mrr[num][n] = 1;
-				if ( checkandwrite(x, y + 1, type,a,b) == 0  )
+				if (checkandwrite(x, y + 1, type, a, b) == 0)
 				{
-					arr[x][y] = 0;//µ±Ç°Î»ÖÃÎŞÊı¿ÉÌî£¬·µ»ØÉÏÒ»¼¶£¬²¢ÖØÖÃÎªÔ­À´×´Ì¬
+					arr[x][y] = 0;//å½“å‰ä½ç½®æ— æ•°å¯å¡«ï¼Œè¿”å›ä¸Šä¸€çº§ï¼Œå¹¶é‡ç½®ä¸ºåŸæ¥çŠ¶æ€
 					xrr[x][n] = 0;
 					yrr[y][n] = 0;
-					if (a!=1)
+					if (a != 1)
 						mrr[num][n] = 0;
 				}
 				else
@@ -86,15 +87,15 @@ bool checkandwrite(int x,int y,int type,int a,int b)//ÕÒµ½¿Õ°×µÄ¸ñ×Ó£¬ÕÒµ½²¢ÌîÈë
 		return false;
 	}
 	else
-		return checkandwrite(x, y + 1, type,a,b);//µ±Ç°¸ñ×ÓÒÑÓĞÊı¾İ£¬Ö±½Ó½øĞĞÏÂÒ»¸ö¸ñ×Ó
-	
+		return checkandwrite(x, y + 1, type, a, b);//å½“å‰æ ¼å­å·²æœ‰æ•°æ®ï¼Œç›´æ¥è¿›è¡Œä¸‹ä¸€ä¸ªæ ¼å­
+
 }
 int main(int argc, char *argv[])
 {
-	int x=1, y=1,type = 1, n = 1,a=1,b=1;
-	type = atoi(argv[2]);//ÎÄ¼şÁ÷ÊäÈëÀàĞÍ
-	n = atoi(argv[4]);//ÎÄ¼şÁ÷ÊäÈë¸öÊı
-	if (type == 4) {//¹¬ÅĞ¶Ï²ÎÊı
+	int x = 1, y = 1, type = 1, n = 1, a = 1, b = 1;
+	type = atoi(argv[2]);//æ–‡ä»¶æµè¾“å…¥ç±»å‹
+	n = atoi(argv[4]);//æ–‡ä»¶æµè¾“å…¥ä¸ªæ•°
+	if (type == 4) {//å®«åˆ¤æ–­å‚æ•°
 		a = 2;
 		b = 2;
 	}
@@ -114,12 +115,12 @@ int main(int argc, char *argv[])
 		a = 1;
 		b = 1;
 	}
-	for (int i = 0; i < n; i++)//ÔËËã³öÊı¶À½á¹û
+	for (int i = 0; i < n; i++)//è¿ç®—å‡ºæ•°ç‹¬ç»“æœ
 	{
-		read(type,a,b);
-		if (checkandwrite(1, 1, type,a,b))
+		read(type, a, b);
+		if (checkandwrite(1, 1, type, a, b))
 			print(type);
-		memset(arr, 0, sizeof(arr));//ÖØÖÃÊı¶ÀºÍ¿ÉÓÃÊá×Ó±íÅÌ
+		memset(arr, 0, sizeof(arr));//é‡ç½®æ•°ç‹¬å’Œå¯ç”¨æ¢³å­è¡¨ç›˜
 		memset(xrr, 0, sizeof(xrr));
 		memset(yrr, 0, sizeof(yrr));
 		memset(mrr, 0, sizeof(mrr));
